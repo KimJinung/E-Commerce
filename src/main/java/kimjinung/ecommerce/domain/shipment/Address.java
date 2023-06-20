@@ -1,4 +1,4 @@
-package kimjinung.ecommerce.domain;
+package kimjinung.ecommerce.domain.shipment;
 
 
 import javax.persistence.Embeddable;
