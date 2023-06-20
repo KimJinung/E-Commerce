@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static kimjinung.ecommerce.domain.order.OrderStatus.*;
 
@@ -32,7 +33,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = ALL)
     private final List<ItemOrder> items = new ArrayList<>();
 
     private Long totalPrice;
@@ -40,7 +41,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order" , cascade = ALL)
     private final List<Shipment> shipment = new ArrayList<>();
 
     protected Order() {

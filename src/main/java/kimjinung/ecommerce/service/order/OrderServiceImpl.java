@@ -40,9 +40,12 @@ public class OrderServiceImpl implements OrderService {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
+        if (items.isEmpty()) throw new IllegalStateException();
+
         Order order = new Order(member, new Address(dto.getCity(), dto.getStreet(), dto.getZipCode()));
-        items.forEach(item -> order.addItem(item, itemCart.get(item.getName())));
+        items.forEach(item -> order.addItem(item, itemCart.get(item.getId().toString())));
         order.done();
+        orderRepository.save(order);
 
         Map<String, Integer> result = new HashMap<>();
         for (ItemOrder item: order.getItems()) {
