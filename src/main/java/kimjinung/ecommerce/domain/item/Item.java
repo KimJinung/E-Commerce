@@ -82,6 +82,13 @@ public class Item {
         category.addItem(this);
     }
 
+    public void addCategory(List<Category> categories) {
+        categories.forEach(c -> {
+            this.categories.add(new CategoryItem(this, c));
+            c.addItem(this);
+        });
+    }
+
     public void removeCategory(Category category) {
         this.categories
                 .stream()

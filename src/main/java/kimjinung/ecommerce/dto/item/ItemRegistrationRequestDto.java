@@ -10,6 +10,7 @@ public class ItemRegistrationRequestDto {
     private String name;
     private int price;
     private int stockQuantity;
+    private int discountRate;
     private List<Integer> categories;
 
 }
