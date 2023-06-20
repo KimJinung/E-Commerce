@@ -1,6 +1,5 @@
 package kimjinung.ecommerce.domain.order;
 
-import kimjinung.ecommerce.domain.shipment.Address;
 import kimjinung.ecommerce.domain.shipment.Shipment;
 import kimjinung.ecommerce.domain.item.Item;
 import kimjinung.ecommerce.domain.member.Member;

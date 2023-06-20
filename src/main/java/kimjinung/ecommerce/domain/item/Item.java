@@ -1,6 +1,7 @@
 package kimjinung.ecommerce.domain.item;
 
 
+import kimjinung.ecommerce.exception.NotEnoughItemStockException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -65,7 +66,8 @@ public class Item {
         int restStock = this.stockQuantity - count;
 
         if (restStock < 0) {
-            throw new IllegalStateException();
+            String msg = String.format("%s not have enough stock quantity", this.name);
+            throw new NotEnoughItemStockException(msg);
         }
 
         this.stockQuantity = restStock;
@@ -89,7 +91,11 @@ public class Item {
     }
 
     public Long calculatePriceByCount(int count) {
-        return (long) this.price * (this.discountRate /100) * count;
+        if (this.discountRate == 0) {
+            return (long) this.price * count;
+        }
+        int discountedPrice = this.price - (this.price * this.discountRate / 100);
+        return (long) discountedPrice * count;
     }
 
 }

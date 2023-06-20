@@ -1,5 +1,6 @@
 package kimjinung.ecommerce.domain.shipment;
 
+import kimjinung.ecommerce.domain.order.Address;
 import kimjinung.ecommerce.domain.order.Order;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,15 +30,18 @@ public class Shipment {
     @Enumerated(EnumType.STRING)
     private ShipmentStatus status;
 
-    @Embedded
-    private Address address;
+    private String city;
+    private String street;
+    private String zipCode;
 
     protected Shipment() {
     }
 
     public Shipment(Order order, Address address) {
         this.order = order;
-        this.address = address;
+        this.city = address.getCity();
+        this.street = address.getStreet();
+        this.zipCode = address.getZipCode();
         this.status = PENDING;
     }
 
