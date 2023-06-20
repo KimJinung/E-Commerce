@@ -3,7 +3,9 @@ package kimjinung.ecommerce.repository;
 import kimjinung.ecommerce.domain.item.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ItemRepository extends JpaRepository<Item, UUID> {
+    Optional<Item> findByName(String name);
 }
