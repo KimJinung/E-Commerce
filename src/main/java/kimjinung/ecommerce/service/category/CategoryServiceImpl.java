@@ -3,7 +3,6 @@ package kimjinung.ecommerce.service.category;
 import kimjinung.ecommerce.domain.item.Category;
 import kimjinung.ecommerce.exception.category.AlreadyExistCategoryNameException;
 import kimjinung.ecommerce.exception.category.CategoryMaxDepthExceedException;
-import kimjinung.ecommerce.exception.item.CategoryNotFoundException;
 import kimjinung.ecommerce.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -7,7 +7,7 @@ import kimjinung.ecommerce.domain.order.ItemOrder;
 import kimjinung.ecommerce.domain.order.Order;
 import kimjinung.ecommerce.dto.order.OrderRequestDto;
 import kimjinung.ecommerce.dto.order.OrderResponseDto;
-import kimjinung.ecommerce.exception.item.MemberNotFoundException;
+import kimjinung.ecommerce.exception.member.MemberNotFoundException;
 import kimjinung.ecommerce.repository.ItemRepository;
 import kimjinung.ecommerce.repository.MemberRepository;
 import kimjinung.ecommerce.repository.OrderRepository;

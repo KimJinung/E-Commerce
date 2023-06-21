@@ -1,4 +1,4 @@
-package kimjinung.ecommerce.exception.item;
+package kimjinung.ecommerce.exception.category;
 
 public class CategoryNotFoundException extends RuntimeException{
     public CategoryNotFoundException(String message) {

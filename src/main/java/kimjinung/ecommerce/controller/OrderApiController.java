@@ -1,7 +1,7 @@
 package kimjinung.ecommerce.controller;
 
 
-import kimjinung.ecommerce.dto.BaseResponseDto;
+import kimjinung.ecommerce.dto.ResponseDto;
 import kimjinung.ecommerce.dto.order.OrderRequestDto;
 import kimjinung.ecommerce.dto.order.OrderResponseDto;
 import kimjinung.ecommerce.service.order.OrderService;
@@ -21,12 +21,12 @@ public class OrderApiController {
     private final OrderService orderService;
 
     @PostMapping
-    public BaseResponseDto<OrderResponseDto> order(
+    public ResponseDto<OrderResponseDto> order(
             @RequestBody @Validated OrderRequestDto dto,
             BindingResult bindingResult
     ) {
 
         OrderResponseDto result = orderService.order(dto);
-        return new BaseResponseDto<>(200, result);
+        return new ResponseDto<>(200, result);
     }
 }

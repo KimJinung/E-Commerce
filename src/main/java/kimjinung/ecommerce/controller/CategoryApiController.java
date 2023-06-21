@@ -2,7 +2,7 @@ package kimjinung.ecommerce.controller;
 
 
 import kimjinung.ecommerce.domain.item.Category;
-import kimjinung.ecommerce.dto.BaseResponseDto;
+import kimjinung.ecommerce.dto.ResponseDto;
 import kimjinung.ecommerce.dto.category.*;
 import kimjinung.ecommerce.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +19,14 @@ public class CategoryApiController {
     private final CategoryService categoryService;
 
     @PostMapping
-    public BaseResponseDto<CategoryRegistrationResponseDto> register(
+    public ResponseDto<CategoryRegistrationResponseDto> register(
             @RequestBody @Validated CategoryRegistrationRequestDto dto,
             BindingResult bindingResult
     ) {
 
         Category category = categoryService.register(dto.getName(), dto.getParentId());
 
-        return new BaseResponseDto<>(
+        return new ResponseDto<>(
                 200,
                 new CategoryRegistrationResponseDto(
                         category.getId(),
@@ -38,14 +38,14 @@ public class CategoryApiController {
     }
 
     @GetMapping
-    public BaseResponseDto<CategorySearchResponseDto> search(
+    public ResponseDto<CategorySearchResponseDto> search(
             @RequestBody @Validated CategorySearchRequestDto dto,
             BindingResult bindingResult
     ) {
 
         int id = dto.getId();
         Category result = categoryService.findById(id);
-        return new BaseResponseDto<>(
+        return new ResponseDto<>(
                 200,
                 new CategorySearchResponseDto(
                         result.getId(),
@@ -57,13 +57,13 @@ public class CategoryApiController {
     }
 
     @PatchMapping
-    public BaseResponseDto<CategoryUpdateResponseDto> update(
+    public ResponseDto<CategoryUpdateResponseDto> update(
             @RequestBody @Validated CategoryUpdateRequestDto dto,
             BindingResult bindingResult
     ) {
         Category result = categoryService.update(dto.getId(), dto.getName(), dto.getParentId());
 
-        return new BaseResponseDto<>(
+        return new ResponseDto<>(
                 200,
                 new CategoryUpdateResponseDto(
                         result.getId(),
