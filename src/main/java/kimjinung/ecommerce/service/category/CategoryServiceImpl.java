@@ -1,6 +1,8 @@
 package kimjinung.ecommerce.service.category;
 
 import kimjinung.ecommerce.domain.item.Category;
+import kimjinung.ecommerce.exception.category.AlreadyExistCategoryNameException;
+import kimjinung.ecommerce.exception.category.CategoryMaxDepthExceedException;
 import kimjinung.ecommerce.exception.item.CategoryNotFoundException;
 import kimjinung.ecommerce.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +19,25 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Category register(Category category) {
+    public Category register(String name, int parentId) {
+        categoryRepository.findByName(name).ifPresent(category -> {
+                    throw new AlreadyExistCategoryNameException("이미 존재하는 카테고리 이름입니다.");
+                }
+        );
+        Category parent = findById(parentId);
+        if (parent != null && parent.getParent() != null) {
+            throw new CategoryMaxDepthExceedException("카테고리는 2단계를 넘어설 수 없습니다.");
+        }
+        Category category = new Category(parent, name);
         return categoryRepository.save(category);
     }
 
     @Override
-    public Category update(Category category) {
-        Category foundCategory = findById(category.getId());
-        foundCategory.updateName(category.getName());
-        foundCategory.updateParent(category.getParent());
+    public Category update(int id, String name, int parentId) {
+        Category foundCategory = findById(id);
+        foundCategory.updateName(name);
+        Category parent = findById(parentId);
+        foundCategory.updateParent(parent);
         return foundCategory;
     }
 

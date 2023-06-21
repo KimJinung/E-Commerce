@@ -6,8 +6,8 @@ import lombok.Data;
 public class CategoryUpdateResponseDto {
 
     private int id;
-    private int parentId;
     private String name;
+    private int parentId;
     private String parentName;
 
     public CategoryUpdateResponseDto(int id, int parentId, String name, String parentName) {

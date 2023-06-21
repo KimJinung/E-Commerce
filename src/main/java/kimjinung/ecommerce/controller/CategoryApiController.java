@@ -24,16 +24,17 @@ public class CategoryApiController {
             BindingResult bindingResult
     ) {
 
-        int parentId = dto.getParentId();
-        String name = dto.getName();
-        Category parent = categoryService.findById(parentId);
-        Category category = new Category(parent, name);
-        Category result = categoryService.register(category);
-        String parentName = result.getParent() != null ? result.getParent().getName() : "";
+        Category category = categoryService.register(dto.getName(), dto.getParentId());
 
         return new BaseResponseDto<>(
                 200,
-                new CategoryRegistrationResponseDto(result.getId(), parentName, result.getName()));
+                new CategoryRegistrationResponseDto(
+                        category.getId(),
+                        category.getName(),
+                        category.getParent() != null ? category.getParent().getId() : 0,
+                        category.getParent() != null ? category.getParent().getName() : ""
+                )
+        );
     }
 
     @GetMapping
@@ -46,7 +47,12 @@ public class CategoryApiController {
         Category result = categoryService.findById(id);
         return new BaseResponseDto<>(
                 200,
-                new CategorySearchResponseDto(result.getId(), result.getName(), result.getParent().getName())
+                new CategorySearchResponseDto(
+                        result.getId(),
+                        result.getName(),
+                        result.getParent() == null ? "" : result.getParent().getName()
+                )
+
         );
     }
 
@@ -55,19 +61,17 @@ public class CategoryApiController {
             @RequestBody @Validated CategoryUpdateRequestDto dto,
             BindingResult bindingResult
     ) {
-        Category parent = categoryService.findById(dto.getParentId());
-        Category category = categoryService.findById(dto.getId());
-        category.updateName(dto.getName());
-        category.updateParent(parent);
+        Category result = categoryService.update(dto.getId(), dto.getName(), dto.getParentId());
 
         return new BaseResponseDto<>(
                 200,
                 new CategoryUpdateResponseDto(
-                        category.getId(),
-                        category.getParent().getId(),
-                        category.getName(),
-                        category.getParent().getName()
+                        result.getId(),
+                        result.getParent() == null ? 0 : result.getParent().getId(),
+                        result.getName(),
+                        result.getParent() == null ? "" : result.getParent().getName()
                 )
         );
     }
+
 }

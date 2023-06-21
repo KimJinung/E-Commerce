@@ -7,15 +7,17 @@ import lombok.Data;
 public class CategoryRegistrationResponseDto {
 
     private int id;
-    private String parentName;
     private String name;
+    private int parentId;
+    private String parentName;
 
     protected CategoryRegistrationResponseDto() {
     }
 
-    public CategoryRegistrationResponseDto(int id, String parentName, String name) {
+    public CategoryRegistrationResponseDto(int id, String name, int parentId, String parentName) {
         this.id = id;
-        this.parentName = parentName;
         this.name = name;
+        this.parentId = parentId;
+        this.parentName = parentName;
     }
 }
