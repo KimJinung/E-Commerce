@@ -1,6 +1,7 @@
 package kimjinung.ecommerce.domain.item;
 
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Getter
 @Entity
-public class Category {
+public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)

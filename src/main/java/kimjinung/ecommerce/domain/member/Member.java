@@ -1,5 +1,6 @@
 package kimjinung.ecommerce.domain.member;
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import static kimjinung.ecommerce.domain.member.MemberRole.*;
 
 @Getter
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @Column(name = "member_id")

@@ -1,6 +1,7 @@
 package kimjinung.ecommerce.domain.item;
 
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import kimjinung.ecommerce.exception.NotEnoughItemStockException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")

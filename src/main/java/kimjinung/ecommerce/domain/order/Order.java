@@ -1,5 +1,6 @@
 package kimjinung.ecommerce.domain.order;
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import kimjinung.ecommerce.domain.shipment.Shipment;
 import kimjinung.ecommerce.domain.item.Item;
 import kimjinung.ecommerce.domain.member.Member;
@@ -18,7 +19,7 @@ import static kimjinung.ecommerce.domain.order.OrderStatus.*;
 @Getter
 @Table(name = "orders")
 @Entity
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
