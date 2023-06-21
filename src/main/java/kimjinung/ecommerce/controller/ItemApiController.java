@@ -26,6 +26,7 @@ public class ItemApiController extends BaseApiController{
             @RequestBody @Validated ItemRegistrationRequestDto dto,
             BindingResult bindingResult
     ) {
+        validateRequest(bindingResult);
 
         Item result = itemService.register(
                 dto.getName(), dto.getPrice(), dto.getStockQuantity(), dto.getDiscountRate(), dto.getCategories()
@@ -81,7 +82,7 @@ public class ItemApiController extends BaseApiController{
             @RequestBody @Validated ItemUpdateRequestDto dto,
             BindingResult bindingResult
     ) {
-       validateRequest(bindingResult);
+        validateRequest(bindingResult);
 
         Item update = itemService.update(
                 UUID.fromString(dto.getId()),
@@ -105,5 +106,22 @@ public class ItemApiController extends BaseApiController{
         );
     }
 
+    @DeleteMapping
+    public ResponseDto<ItemRemoveResponseDto> remove(
+            @RequestBody @Validated ItemRemoveRequestDto dto,
+            BindingResult bindingResult
+    ) {
+        validateRequest(bindingResult);
+        itemService.remove(UUID.fromString(dto.getItemId()));
+
+        return new ResponseDto<>(
+                200,
+                new ItemRemoveResponseDto(
+                        dto.getItemId(),
+                        "ok"
+                )
+        );
+    }
 
 }
+

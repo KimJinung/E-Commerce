@@ -12,5 +12,5 @@ public interface ItemService {
     Item find(UUID id);
     List<Item> searchByCategory(int categories);
     List<Item> searchByKeyword(String keywords);
-    void remove(Item item);
+    void remove(UUID id);
 }

@@ -62,7 +62,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void remove(Item item) {
+    public void remove(UUID uuid) {
+        Item item = find(uuid);
         itemRepository.delete(item);
     }
 }
