@@ -1,4 +1,4 @@
-package kimjinung.ecommerce.exception;
+package kimjinung.ecommerce.exception.member;
 
 public class AlreadyExistUserIdException extends RuntimeException{
 

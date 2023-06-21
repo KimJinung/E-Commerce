@@ -1,5 +1,6 @@
 package kimjinung.ecommerce.domain.shipment;
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import kimjinung.ecommerce.domain.order.Address;
 import kimjinung.ecommerce.domain.order.Order;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import static kimjinung.ecommerce.domain.shipment.ShipmentStatus.*;
 
 @Getter
 @Entity
-public class Shipment {
+public class Shipment extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -34,7 +35,7 @@ public class Shipment {
     private String street;
     private String zipCode;
 
-    protected Shipment() {
+    public Shipment() {
     }
 
     public Shipment(Order order, Address address) {

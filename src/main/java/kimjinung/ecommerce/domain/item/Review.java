@@ -1,5 +1,6 @@
 package kimjinung.ecommerce.domain.item;
 
+import kimjinung.ecommerce.domain.common.BaseEntity;
 import kimjinung.ecommerce.domain.member.Member;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,7 +12,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")

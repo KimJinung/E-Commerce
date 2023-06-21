@@ -1,6 +1,6 @@
 package kimjinung.ecommerce.controller;
 
-import kimjinung.ecommerce.dto.BaseResponseDto;
+import kimjinung.ecommerce.dto.ResponseDto;
 import kimjinung.ecommerce.dto.member.MemberJoinRequestDto;
 import kimjinung.ecommerce.dto.member.MemberJoinResponseDto;
 import kimjinung.ecommerce.service.member.MemberService;
@@ -19,12 +19,12 @@ public class MemberApiController {
 
     private final MemberService memberService;
     @PostMapping
-    public BaseResponseDto<MemberJoinResponseDto> join(
+    public ResponseDto<MemberJoinResponseDto> join(
             @RequestBody @Validated MemberJoinRequestDto dto,
             BindingResult bindingResult
     ) {
         //validateRequest(bindingResult);
         MemberJoinResponseDto response = memberService.join(dto);
-        return new BaseResponseDto<>(200, response);
+        return new ResponseDto<>(200, response);
     }
 }

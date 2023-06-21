@@ -1,7 +1,8 @@
 package kimjinung.ecommerce.domain.item;
 
 
-import kimjinung.ecommerce.exception.NotEnoughItemStockException;
+import kimjinung.ecommerce.domain.common.BaseEntity;
+import kimjinung.ecommerce.exception.item.NotEnoughItemStockException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -27,7 +28,7 @@ public class Item {
     private Integer stockQuantity;
     private Integer discountRate;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private final List<CategoryItem> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
@@ -56,6 +57,10 @@ public class Item {
 
     public void updateDiscountRate(Integer discountRate) {
         this.discountRate = discountRate;
+    }
+
+    public void updateStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public void addStock(int count) {
@@ -89,12 +94,8 @@ public class Item {
         });
     }
 
-    public void removeCategory(Category category) {
-        this.categories
-                .stream()
-                .filter(c -> c.getCategory().getId() == category.getId())
-                .findFirst()
-                .ifPresent(this.categories::remove);
+    public void removeAllCategory() {
+        this.categories.clear();
     }
 
     public Long calculatePriceByCount(int count) {
