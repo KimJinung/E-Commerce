@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ItemService {
-    Item register(Item item, List<Category> categories);
-    Item update(Item item, List<Category> categories);
-    Item searchById(UUID uuid);
+    Item register(String name, int price, int stockQuantity, int discountRate, List<Integer> category);
+    Item update(UUID id, String name, int price, int stockQuantity, int discountRate, List<Integer> category);
+    Item find(UUID uuid);
     List<Item> searchByCategory(Category categories);
     List<Item> searchByKeyword(String keywords);
     void remove(Item item);

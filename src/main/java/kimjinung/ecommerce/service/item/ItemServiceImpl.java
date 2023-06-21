@@ -3,6 +3,7 @@ package kimjinung.ecommerce.service.item;
 import kimjinung.ecommerce.domain.item.Category;
 import kimjinung.ecommerce.domain.item.Item;
 import kimjinung.ecommerce.exception.item.ItemNotFoundException;
+import kimjinung.ecommerce.repository.CategoryRepository;
 import kimjinung.ecommerce.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,28 +18,29 @@ import java.util.UUID;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
-    public Item register(Item item, List<Category> categories) {
-        categories.forEach(item::addCategory);
-        itemRepository.save(item);
+    public Item register(String name, int price, int stockQuantity, int discountRate, List<Integer> categories) {
+        Item item = new Item(name, price, stockQuantity, discountRate);
+        categoryRepository.findAllById(categories).forEach(item::addCategory);
+        return itemRepository.save(item);
+    }
+
+    @Override
+    public Item update(UUID id, String name, int price, int stockQuantity, int discountRate, List<Integer> categories) {
+        Item item = find(id);
+        item.updateName(name);
+        item.updatePrice(price);
+        item.updateStockQuantity(stockQuantity);
+        item.updateDiscountRate(discountRate);
+        item.getCategories().clear();
+        categoryRepository.findAllById(categories).forEach(item::addCategory);
         return item;
     }
 
     @Override
-    public Item update(Item item, List<Category> categories) {
-        Item foundItem = searchById(item.getId());
-        foundItem.updateName(item.getName());
-        foundItem.updatePrice(item.getPrice());
-        foundItem.updateDiscountRate(item.getDiscountRate());
-        foundItem.updateStockQuantity(item.getStockQuantity());
-        foundItem.getCategories().clear();
-        categories.forEach(item::addCategory);
-        return foundItem;
-    }
-
-    @Override
-    public Item searchById(UUID uuid) {
+    public Item find(UUID uuid) {
         return itemRepository.findById(uuid).orElseThrow(ItemNotFoundException::new);
     }
 
