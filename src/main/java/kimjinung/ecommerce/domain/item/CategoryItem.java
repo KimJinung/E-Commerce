@@ -1,6 +1,7 @@
 package kimjinung.ecommerce.domain.item;
 
 import lombok.Getter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -12,7 +13,12 @@ import static javax.persistence.FetchType.LAZY;
 public class CategoryItem {
 
     @Id
-    @Column(name = "category_item_id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(
+            name = "uuid",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "category_item_id", columnDefinition = "BINARY(16)")
     private UUID id;
 
     @ManyToOne(fetch = LAZY)
