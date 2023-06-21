@@ -9,8 +9,8 @@ import java.util.UUID;
 public interface ItemService {
     Item register(String name, int price, int stockQuantity, int discountRate, List<Integer> category);
     Item update(UUID id, String name, int price, int stockQuantity, int discountRate, List<Integer> category);
-    Item find(UUID uuid);
-    List<Item> searchByCategory(Category categories);
+    Item find(UUID id);
+    List<Item> searchByCategory(int categories);
     List<Item> searchByKeyword(String keywords);
     void remove(Item item);
 }

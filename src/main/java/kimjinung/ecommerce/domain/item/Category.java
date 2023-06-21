@@ -30,7 +30,7 @@ public class Category extends BaseEntity {
     @OneToMany(mappedBy = "parent", cascade = ALL)
     private final List<Category> child = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = ALL)
+    @OneToMany(mappedBy = "category")
     private final List<CategoryItem> items = new ArrayList<>();
 
     protected Category() {

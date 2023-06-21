@@ -4,7 +4,7 @@ package kimjinung.ecommerce.dto.item;
 import lombok.Data;
 
 @Data
-public class ItemSearchByCategoriesResponseDto {
+public class ItemSearchByCategoryResponseDto {
 
     private String id;
     private String name;
@@ -12,10 +12,10 @@ public class ItemSearchByCategoriesResponseDto {
     private int stockQuantity;
     private int discountRate;
 
-    protected ItemSearchByCategoriesResponseDto() {
+    protected ItemSearchByCategoryResponseDto() {
     }
 
-    public ItemSearchByCategoriesResponseDto(String id, String name, int price, int stockQuantity, int discountRate) {
+    public ItemSearchByCategoryResponseDto(String id, String name, int price, int stockQuantity, int discountRate) {
         this.id = id;
         this.name = name;
         this.price = price;

@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class ItemSearchByKeywordsRequestDto {
 
-    private List<String> keywords;
+    private String keywords;
 }

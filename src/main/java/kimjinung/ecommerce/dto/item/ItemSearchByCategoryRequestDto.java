@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ItemSearchByCategoriesRequestDto {
-    private List<Integer> categories;
+public class ItemSearchByCategoryRequestDto {
+    private int categories;
 }

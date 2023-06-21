@@ -28,7 +28,7 @@ public class Item extends BaseEntity {
     private Integer stockQuantity;
     private Integer discountRate;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private final List<CategoryItem> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
@@ -94,12 +94,8 @@ public class Item extends BaseEntity {
         });
     }
 
-    public void removeCategory(Category category) {
-        this.categories
-                .stream()
-                .filter(c -> c.getCategory().getId() == category.getId())
-                .findFirst()
-                .ifPresent(this.categories::remove);
+    public void removeAllCategory() {
+        this.categories.clear();
     }
 
     public Long calculatePriceByCount(int count) {

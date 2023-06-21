@@ -1,7 +1,9 @@
 package kimjinung.ecommerce.service.item;
 
 import kimjinung.ecommerce.domain.item.Category;
+import kimjinung.ecommerce.domain.item.CategoryItem;
 import kimjinung.ecommerce.domain.item.Item;
+import kimjinung.ecommerce.exception.category.CategoryNotFoundException;
 import kimjinung.ecommerce.exception.item.ItemNotFoundException;
 import kimjinung.ecommerce.repository.CategoryRepository;
 import kimjinung.ecommerce.repository.ItemRepository;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -34,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
         item.updatePrice(price);
         item.updateStockQuantity(stockQuantity);
         item.updateDiscountRate(discountRate);
-        item.getCategories().clear();
+        item.removeAllCategory();
         categoryRepository.findAllById(categories).forEach(item::addCategory);
         return item;
     }
@@ -45,8 +48,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> searchByCategory(Category category) {
-        return itemRepository.findAllByCategory(category).orElseThrow(ItemNotFoundException::new);
+    public List<Item> searchByCategory(int categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
+            throw new CategoryNotFoundException("존재하지 않는 카테고리 입니다.");
+        });
+        Category result = categoryRepository.findItemByCategory(category).orElseThrow(ItemNotFoundException::new);
+        return result.getItems().stream().map(CategoryItem::getItem).collect(Collectors.toList());
     }
 
     @Override
