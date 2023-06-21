@@ -21,12 +21,12 @@ public class ItemApiController {
 
     private final ItemService itemService;
 
-    @PostMapping
-    public BaseResponseDto<ItemRegistrationResponseDto> register(
-            @RequestBody @Validated ItemRegistrationRequestDto dto,
-            BindingResult bindingResult
-    ) {
-        ItemRegistrationResponseDto result = itemService.register(dto);
-        return new BaseResponseDto<>(200, result);
-    }
+//    @PostMapping
+//    public BaseResponseDto<ItemRegistrationResponseDto> register(
+//            @RequestBody @Validated ItemRegistrationRequestDto dto,
+//            BindingResult bindingResult
+//    ) {
+//
+//
+//    }
 }

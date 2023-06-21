@@ -2,7 +2,7 @@ package kimjinung.ecommerce.domain.order;
 
 import kimjinung.ecommerce.domain.item.Item;
 import kimjinung.ecommerce.domain.member.Member;
-import kimjinung.ecommerce.exception.NotEnoughItemStockException;
+import kimjinung.ecommerce.exception.item.NotEnoughItemStockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

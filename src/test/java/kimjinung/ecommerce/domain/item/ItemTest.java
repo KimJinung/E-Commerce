@@ -1,7 +1,6 @@
 package kimjinung.ecommerce.domain.item;
 
-import kimjinung.ecommerce.exception.NotEnoughItemStockException;
-import org.assertj.core.api.Assertions;
+import kimjinung.ecommerce.exception.item.NotEnoughItemStockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

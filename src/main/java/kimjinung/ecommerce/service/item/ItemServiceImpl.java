@@ -1,57 +1,59 @@
 package kimjinung.ecommerce.service.item;
 
 import kimjinung.ecommerce.domain.item.Category;
-import kimjinung.ecommerce.domain.item.CategoryItem;
 import kimjinung.ecommerce.domain.item.Item;
-import kimjinung.ecommerce.dto.item.ItemRegistrationRequestDto;
-import kimjinung.ecommerce.dto.item.ItemRegistrationResponseDto;
-import kimjinung.ecommerce.exception.ItemNotFoundException;
-import kimjinung.ecommerce.repository.CategoryRepository;
+import kimjinung.ecommerce.exception.item.ItemNotFoundException;
 import kimjinung.ecommerce.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
-    private final CategoryRepository categoryRepository;
 
     @Override
-    public ItemRegistrationResponseDto register(ItemRegistrationRequestDto dto) {
-        Item item = createItemByDto(dto);
+    public Item register(Item item, List<Category> categories) {
+        categories.forEach(item::addCategory);
         itemRepository.save(item);
-
-        Item result = itemRepository.findById(item.getId()).orElseThrow(() -> {
-            throw new ItemNotFoundException("Fail to register item");
-        });
-        List<String> categories = result.getCategories()
-                .stream()
-                .map(categoryItem -> categoryItem.getCategory().getName())
-                .collect(Collectors.toList());
-
-        return new ItemRegistrationResponseDto(
-                result.getName(),
-                result.getPrice(),
-                result.getStockQuantity(),
-                categories
-        );
-    }
-
-    private Item createItemByDto(ItemRegistrationRequestDto dto) {
-        String name = dto.getName();
-        int price = dto.getPrice();
-        int stockQuantity = dto.getStockQuantity();
-        int discountRate = dto.getDiscountRate();
-        List<Category> categories = categoryRepository.findAllById(dto.getCategories());
-        Item item = new Item(name, price, stockQuantity, discountRate);
-        item.addCategory(categories);
         return item;
     }
 
+    @Override
+    public Item update(Item item, List<Category> categories) {
+        Item foundItem = searchById(item.getId());
+        foundItem.updateName(item.getName());
+        foundItem.updatePrice(item.getPrice());
+        foundItem.updateDiscountRate(item.getDiscountRate());
+        foundItem.updateStockQuantity(item.getStockQuantity());
+        foundItem.getCategories().clear();
+        categories.forEach(item::addCategory);
+        return foundItem;
+    }
+
+    @Override
+    public Item searchById(UUID uuid) {
+        return itemRepository.findById(uuid).orElseThrow(ItemNotFoundException::new);
+    }
+
+    @Override
+    public List<Item> searchByCategory(Category category) {
+        return itemRepository.findAllByCategory(category).orElseThrow(ItemNotFoundException::new);
+    }
+
+    @Override
+    public List<Item> searchByKeyword(String keyword) {
+        return itemRepository.findAllByKeyword(keyword).orElseThrow(ItemNotFoundException::new);
+    }
+
+    @Override
+    public void remove(Item item) {
+        itemRepository.delete(item);
+    }
 }

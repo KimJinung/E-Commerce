@@ -2,7 +2,7 @@ package kimjinung.ecommerce.domain.item;
 
 
 import kimjinung.ecommerce.domain.common.BaseEntity;
-import kimjinung.ecommerce.exception.NotEnoughItemStockException;
+import kimjinung.ecommerce.exception.item.NotEnoughItemStockException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -57,6 +57,10 @@ public class Item extends BaseEntity {
 
     public void updateDiscountRate(Integer discountRate) {
         this.discountRate = discountRate;
+    }
+
+    public void updateStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public void addStock(int count) {
